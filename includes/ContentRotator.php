@@ -101,9 +101,9 @@ class ContentRotator {
         
         
         
-        // $html_data = self::get_all_posts_with_trend_count_within($time_elapsed);
+        $html_data = self::get_all_posts_with_trend_count_within($time_elapsed);
         // $html_data = self::get_formatted_trends_in_past($time_elapsed);
-        $html_data = self::get_formatted_attractive_trends_in_past_with_tabs();
+        // $html_data = self::get_formatted_attractive_trends_in_past_with_tabs();
 
         return $html_data;
     }
