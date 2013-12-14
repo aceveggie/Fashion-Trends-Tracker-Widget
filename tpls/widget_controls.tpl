@@ -15,3 +15,6 @@ of the widget, so don't try hard-coding values here.
 
 <label for="[+title.id+]">Title</label><br/>
     <input id="[+title.id+]" name="[+title.name+]" value="[+title.value+]" /><br/>
+
+<label for="[+color_value.id+]">Color Value</label><br/>
+    <input class="cp-revert" type="text" id="[+color_value.id+]" name="[+color_value.name+]" value="[+color_value.value+]" />

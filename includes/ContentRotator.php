@@ -98,12 +98,12 @@ class ContentRotator {
         // $html_data = self::get_specific_trend_list($trend_name);
         // $html_data = self::return_random_html();
         
+        // $html_data = self::get_random_html_colorpicker();
         
         
-        
-        $html_data = self::get_all_posts_with_trend_count_within($time_elapsed);
+        // $html_data = self::get_all_posts_with_trend_count_within($time_elapsed);
         // $html_data = self::get_formatted_trends_in_past($time_elapsed);
-        // $html_data = self::get_formatted_attractive_trends_in_past_with_tabs();
+        $html_data = self::get_formatted_attractive_trends_in_past_with_tabs();
 
         return $html_data;
     }
@@ -390,12 +390,20 @@ class ContentRotator {
         return $html_data;
     }
 
+    static function add_color_picker_jss()
+    {
+
+
+    }
+
     static function add_js_css_to_post_page()
     {
         // wp_deregister_script( 'jquery' );
         wp_enqueue_script( 'jquery2', "http://code.jquery.com/jquery-1.9.1.js");
         wp_enqueue_script( 'jquery1', "http://code.jquery.com/ui/1.10.3/jquery-ui.js");
         wp_enqueue_style('content_rotator-page-load-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
+        wp_enqueue_script( 'accordion_latest_colorpicker', plugins_url( '/js/jquery.colorpicker.js', dirname(__FILE__) ));
+        wp_enqueue_style('content_rotator-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
 
         ?><script type="text/javascript"> $(function() {$( "#accordion" ).accordion();});</script><?php
         
@@ -650,6 +658,8 @@ class ContentRotator {
         wp_enqueue_script( 'jquery3', "http://code.jquery.com/jquery-latest.min.js");
         wp_enqueue_script( 'accordion_latest', plugins_url( '/js/main.js', dirname(__FILE__) ));
         wp_enqueue_style('content_rotator-page-load-css-1', plugins_url('/css/styles.css'),dirname(__FILE__));
+        wp_enqueue_script( 'accordion_latest_colorpicker', plugins_url( '/js/jquery.colorpicker.js', dirname(__FILE__) ));
+        wp_enqueue_style('content_rotator-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
     }
 
     static function get_formatted_attractive_trends_in_past_with_tabs()
@@ -812,6 +822,20 @@ class ContentRotator {
 
         $html_data .= '<script>$(function() { $( document ).tooltip();  });</script>';
         $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';
+        // get the color value of the widget. if it doesn't exist use color of #9999E0
+
+        $colorpicker_values = get_post_meta( 1, 'colorpicker_value', true );
+        // echo '$colorpicker_values'. $colorpicker_values;
+
+        if( ! empty( $colorpicker_values ) )
+        {
+            $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#'.$colorpicker_values.'"); });</script>';
+        }
+        else
+        {
+            $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';            
+        }
+
         $html_data .= '<script> $(function() { $(".ui-accordion-header.ui-state-active").css("background","#FF6633"); });</script>';
 
         // first get all data
@@ -1291,6 +1315,26 @@ class ContentRotator {
         $html_data .= '</ul></div>';
         
         return $html_data;
+    }
+
+    static function get_random_html_colorpicker()
+    {
+        // wp_enqueue_script('jquery_color_picker_1','https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js');
+        // wp_enqueue_script('jquery_color_picker_2','https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js');
+        // wp_enqueue_style('jquery_color_picker_css1','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css');
+        // wp_enqueue_style('content_rotator-color-picker1', plugins_url( 'css/jquery.colorpicker.css', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js1', plugins_url( 'js/jquery.colorpicker.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js2', plugins_url( 'js/i18n/jquery.ui.colorpicker-nl.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js3', plugins_url( 'js/swatches/jquery.ui.colorpicker-pantone.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js4', plugins_url( 'js/parts/jquery.ui.colorpicker-rgbslider.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js5', plugins_url( 'js/parts/jquery.ui.colorpicker-memory.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js6', plugins_url( 'js/parsers/jquery.ui.colorpicker-cmyk-parser.js', dirname(__FILE__)));
+        // wp_enqueue_script( 'colorpicker_js7', plugins_url( 'js/parsers/jquery.ui.colorpicker-cmyk-percentage-parser.js', dirname(__FILE__)));
+
+        // $html_data = '<script>$(function() {$(".cp-revert").colorpicker({revert: true,parts: "full",showNoneButton: true});});</script>';
+        // $html_data .= '<input type="text" class="cp-revert" value="" style="text-align: right"/>';
+
+        // return $html_data;
     }
 
 
