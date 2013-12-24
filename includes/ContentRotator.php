@@ -836,7 +836,7 @@ class ContentRotator {
             $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';            
         }
 
-        $html_data .= '<script> $(function() { $(".ui-accordion-header.ui-state-active").css("background","#FF6633"); });</script>';
+        // $html_data .= '<script> $(function() { $(".ui-accordion-header.ui-state-active").css("background","#FF6633"); });</script>';
 
         // first get all data
         $post_id_array = self::get_postid_date_trend("data");
