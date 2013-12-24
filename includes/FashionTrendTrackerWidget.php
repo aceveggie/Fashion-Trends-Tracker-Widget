@@ -1,15 +1,15 @@
 <?php
 /*------------------------------------------------------------------------------
-Content Rotator Widget: rotates chunks of content.
+Fashion Trend Tracker Widget: rotates chunks of content.
 ------------------------------------------------------------------------------*/
-class ContentRotatorWidget extends WP_Widget
+class FashionTrendTrackerWidget extends WP_Widget
 {
-    public $name = 'Content Rotator';
+    public $name = 'Fashion Trend Tracker';
     public $description = 'Rotates chunks of content on a periodic basis';
     /* List all controllable options here along with a default value.
     The values can be distinct for each instance of the widget. */
     public $control_options = array(
-        'title'                 => 'Content Rotator',
+        'title'                 => 'Fashion Trend Tracker',
         'color_value' => ''
     );
 
@@ -50,16 +50,16 @@ class ContentRotatorWidget extends WP_Widget
             {
                 $placeholders[ $key .'.value' ] = $this->control_options[ $key ];
             }
-            // $placeholders[ $key .'.label' ]  = __( ContentRotator::beautify($key) );
+            // $placeholders[ $key .'.label' ]  = __( FashionTrendTracker::beautify($key) );
         }
     
         $tpl = file_get_contents( dirname(dirname(__FILE__)) .'/tpls/widget_controls.tpl');
         
-        print ContentRotator::parse($tpl, $placeholders);
+        print FashionTrendTracker::parse($tpl, $placeholders);
         wp_enqueue_script('jquery_color_picker_1','https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js');
         wp_enqueue_script('jquery_color_picker_2','https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js');
         wp_enqueue_style('jquery_color_picker_css1','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css');
-        wp_enqueue_style('content_rotator-color-picker1', plugins_url( 'css/jquery.colorpicker.css', dirname(__FILE__)));
+        wp_enqueue_style('fashion_trend_tracker-color-picker1', plugins_url( 'css/jquery.colorpicker.css', dirname(__FILE__)));
         wp_enqueue_script( 'colorpicker_js1', plugins_url( 'js/jquery.colorpicker.js', dirname(__FILE__)));
         wp_enqueue_script( 'colorpicker_js2', plugins_url( 'js/i18n/jquery.ui.colorpicker-nl.js', dirname(__FILE__)));
         wp_enqueue_script( 'colorpicker_js3', plugins_url( 'js/swatches/jquery.ui.colorpicker-pantone.js', dirname(__FILE__)));
@@ -87,15 +87,30 @@ class ContentRotatorWidget extends WP_Widget
         // insert value into post meta data the color of the widget
         $colorpicker_values = get_post_meta( 1, 'colorpicker_value', true );
 
-        // if the above value exists update it or else add it
-        if( ! empty( $colorpicker_values ) )
+        // // if the above value exists update it or else add it
+        // if( ! empty( $colorpicker_values ) )
+        // {
+        //   update_post_meta(1, 'colorpicker_value', $new_instance['color_value']);
+        // }
+        // else
+        // {
+        //     add_post_meta(1, 'colorpicker_value', $new_instance['color_value']);
+        // }
+
+        $option_name = 'colorpicker_value' ;
+        if ( get_option( $option_name ) !== false )
         {
-          update_post_meta(1, 'colorpicker_value', $new_instance['color_value']);
+            // The option already exists, so we just update it.
+            update_option( $option_name, $new_instance['color_value'] );
         }
         else
         {
-            add_post_meta(1, 'colorpicker_value', $new_instance['color_value']);
+            // The option hasn't been added yet. We'll add it with $autoload set to 'no'.
+            $deprecated = null;
+            $autoload = 'no';
+            add_option( $option_name, $new_instance['color_value'], $deprecated, $autoload );
         }
+        return $instance;
 
         return $instance;
     }
@@ -116,7 +131,7 @@ class ContentRotatorWidget extends WP_Widget
           echo $before_title . $title . $after_title;;
     
         // print widget data
-        echo ContentRotator::get_widget_data();
+        echo FashionTrendTracker::get_widget_data();
         echo $after_widget;
             
         }
