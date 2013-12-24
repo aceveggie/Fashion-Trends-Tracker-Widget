@@ -2,9 +2,9 @@
 /*------------------------------------------------------------------------------
 Helper functions
 ------------------------------------------------------------------------------*/
-class ContentRotator {
+class FashionTrendTracker {
 
-    public static $page = 'content-rotation';
+    public static $page = 'fashion-trends';
     
     /*------------------------------------------------------------------------------
     Adds a menu item inside the WordPress admin
@@ -13,11 +13,11 @@ class ContentRotator {
     {
         add_submenu_page(
             'plugins.php',                          // Menu page to attach to
-            'Content Rotator Configuration',        // page title
-            'Content Rotator',                      // menu title
+            'Fashion Trend Tracker Configuration',        // page title
+            'Fashion Trend Tracker',                      // menu title
             'manage_options',                       // permissions
-            ContentRotator::$page,                  // page-name (used in the URL)
-            'ContentRotator::generate_admin_page'   // clicking callback function
+            FashionTrendTracker::$page,                  // page-name (used in the URL)
+            'FashionTrendTracker::generate_admin_page'   // clicking callback function
         );
     }
 
@@ -42,12 +42,12 @@ class ContentRotator {
 
         $msg = ''; // used to display a success message on updates
         
-        if ( !empty($_POST) && check_admin_referer('content_rotation_admin_options_update') )
+        if ( !empty($_POST) && check_admin_referer('fashion_trend_tracker_admin_options_update') )
         {
             
-            update_option('content_rotation_content_separator', 
+            update_option('fashion_trend_tracker_content_separator', 
                 stripslashes($_POST['separator']) );
-            update_option('content_rotation_content_block', 
+            update_option('fashion_trend_tracker_content_block', 
                 stripslashes($_POST['content_block']) );    
 
             $msg = '<div class="updated"><p>Your settings have been <strong>updated</strong></p></div>';
@@ -401,9 +401,9 @@ class ContentRotator {
         // wp_deregister_script( 'jquery' );
         wp_enqueue_script( 'jquery2', "http://code.jquery.com/jquery-1.9.1.js");
         wp_enqueue_script( 'jquery1', "http://code.jquery.com/ui/1.10.3/jquery-ui.js");
-        wp_enqueue_style('content_rotator-page-load-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
+        wp_enqueue_style('fashion_trend_tracker-page-load-css', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
         wp_enqueue_script( 'accordion_latest_colorpicker', plugins_url( '/js/jquery.colorpicker.js', dirname(__FILE__) ));
-        wp_enqueue_style('content_rotator-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
+        wp_enqueue_style('fashion_trend_tracker-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
 
         ?><script type="text/javascript"> $(function() {$( "#accordion" ).accordion();});</script><?php
         
@@ -657,9 +657,9 @@ class ContentRotator {
     {
         wp_enqueue_script( 'jquery3', "http://code.jquery.com/jquery-latest.min.js");
         wp_enqueue_script( 'accordion_latest', plugins_url( '/js/main.js', dirname(__FILE__) ));
-        wp_enqueue_style('content_rotator-page-load-css-1', plugins_url('/css/styles.css'),dirname(__FILE__));
+        wp_enqueue_style('fashion_trend_tracker-page-load-css-1', plugins_url('/css/styles.css'),dirname(__FILE__));
         wp_enqueue_script( 'accordion_latest_colorpicker', plugins_url( '/js/jquery.colorpicker.js', dirname(__FILE__) ));
-        wp_enqueue_style('content_rotator-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
+        wp_enqueue_style('fashion_trend_tracker-page-load-css-2', plugins_url('/css/jquery.colorpicker.css'),dirname(__FILE__));
     }
 
     static function get_formatted_attractive_trends_in_past_with_tabs()
@@ -824,17 +824,21 @@ class ContentRotator {
         $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';
         // get the color value of the widget. if it doesn't exist use color of #9999E0
 
-        $colorpicker_values = get_post_meta( 1, 'colorpicker_value', true );
+        // $colorpicker_values = get_post_meta( 1, 'colorpicker_value', true );
+        
         // echo '$colorpicker_values'. $colorpicker_values;
 
-        if( ! empty( $colorpicker_values ) )
-        {
-            $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#'.$colorpicker_values.'"); });</script>';
-        }
-        else
-        {
-            $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';            
-        }
+        // if( ! empty( $colorpicker_values ) )
+        // {
+        //     $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#'.$colorpicker_values.'"); });</script>';
+        // }
+        // else
+        // {
+        //     $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#9999E0"); });</script>';            
+        // }
+
+        $colorpicker_values = get_option( 'colorpicker_value', '9999E0' );
+        $html_data .= '<script> $(function() { $(".ui-accordion-header").css("background","#'.$colorpicker_values.'"); });</script>';
 
         // $html_data .= '<script> $(function() { $(".ui-accordion-header.ui-state-active").css("background","#FF6633"); });</script>';
 
@@ -1322,7 +1326,7 @@ class ContentRotator {
         // wp_enqueue_script('jquery_color_picker_1','https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js');
         // wp_enqueue_script('jquery_color_picker_2','https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js');
         // wp_enqueue_style('jquery_color_picker_css1','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css');
-        // wp_enqueue_style('content_rotator-color-picker1', plugins_url( 'css/jquery.colorpicker.css', dirname(__FILE__)));
+        // wp_enqueue_style('fashion_trend_tracker-color-picker1', plugins_url( 'css/jquery.colorpicker.css', dirname(__FILE__)));
         // wp_enqueue_script( 'colorpicker_js1', plugins_url( 'js/jquery.colorpicker.js', dirname(__FILE__)));
         // wp_enqueue_script( 'colorpicker_js2', plugins_url( 'js/i18n/jquery.ui.colorpicker-nl.js', dirname(__FILE__)));
         // wp_enqueue_script( 'colorpicker_js3', plugins_url( 'js/swatches/jquery.ui.colorpicker-pantone.js', dirname(__FILE__)));
